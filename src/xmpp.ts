@@ -113,7 +113,7 @@ export class Xmpp {
 			return;
 		}
 		await this.stopClient(puppetId);
-		p.client = new Client(p.data.username, p.data.password);
+		p.client = new Client(p.data.username, p.data.password, p.data.wsUrl);
 		const client = p.client;
 		client.on("text", async (stanza: any) => {
 			try {
@@ -228,7 +228,7 @@ export class Xmpp {
 		if (this.puppets[puppetId]) {
 			await this.deletePuppet(puppetId);
 		}
-		const client = new Client(data.username, data.password);
+		const client = new Client(data.username, data.password, data.wsUrl);
 		const TWO_MIN = 120000;
 		this.puppets[puppetId] = {
 			client,

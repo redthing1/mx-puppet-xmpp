@@ -117,14 +117,17 @@ async function run() {
 		const retData = {
 			success: false,
 		} as IRetData;
-		const TOKENS_TO_EXTRACT = 2;
-		const [username, password] = str.split(/ (.+)/, TOKENS_TO_EXTRACT);
+		const TOKENS_TO_EXTRACT = 3;
+		// const [username, password, wsUrl] = str.split(/ (.+)/, TOKENS_TO_EXTRACT);
+		const [username, password, wsUrl] = str.split(" ", TOKENS_TO_EXTRACT);
 		const data: any = {
 			username,
 			password,
+			wsUrl,
 		};
 		try {
-			const client = new Client(username, password);
+			log.verbose(`trying to log in as ${username}, ${password} to ${wsUrl}`);
+			const client = new Client(username, password, wsUrl);
 			await client.connect();
 			data.state = client.getState;
 			setTimeout(async () => {

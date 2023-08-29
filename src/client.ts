@@ -47,6 +47,7 @@ export class Client extends EventEmitter {
 	constructor(
 		private loginUsername: string,
 		private password: string,
+		private wsUrl: string,
 	) { super(); }
 
 	public get username(): string {
@@ -58,12 +59,13 @@ export class Client extends EventEmitter {
 	}
 
 	public async getWebsocket(): Promise<string> {
-		const response = await fetch(`https://${this.domain}/.well-known/host-meta`);
-		const xmlData = await response.text();
-		const document = Parser.parse(xmlData) as unknown as HTMLElement;
-		const relValue = "urn:xmpp:alt-connections:websocket"
-		const line = document.querySelectorAll(`[rel="${relValue}"]`);
-		return line[0].getAttribute('href') as string;
+		// const response = await fetch(`https://${this.domain}/.well-known/host-meta`);
+		// const xmlData = await response.text();
+		// const document = Parser.parse(xmlData) as unknown as HTMLElement;
+		// const relValue = "urn:xmpp:alt-connections:websocket"
+		// const line = document.querySelectorAll(`[rel="${relValue}"]`);
+		// return line[0].getAttribute('href') as string;
+		return this.wsUrl;
 	}
 
 	public get getState() {
